@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Philosophical Problems Worksheet - eSCHOLARIS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f0f8ff 0%, #ffffff 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(36, 75, 90, 0.15);
+            overflow: hidden;
+        }
+
+        /* Language Toggle */
+        .language-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+            z-index: 1000;
+            background: white;
+            padding: 8px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .lang-btn {
+            padding: 10px 16px;
+            border: 2px solid #183942;
+            background: white;
+            color: #183942;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 12px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .lang-btn.active {
+            background: linear-gradient(135deg, #D96017 0%, #F5BE10 100%);
+            color: white;
+            border-color: #D96017;
+        }
+
+        .lang-btn:hover:not(.active) {
+            background: #f0f8ff;
+        }
+
+        /* Header Section */
+        .header {
+            background: linear-gradient(135deg, #183942 0%, #2c5f75 100%);
+            padding: 40px 20px;
+            position: relative;
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 400px;
+            height: 400px;
+            background: linear-gradient(135deg, #D96017 0%, #F5BE10 100%);
+            clip-path: polygon(30% 0%, 100% 0%, 70% 100%, 0% 100%);
+            opacity: 0.9;
+            z-index: 1;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            z-index: 2;
+        }
+
+        .search-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #F5BE10 0%, #D96017 100%);
+            border-radius: 14px;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 6px 20px rgba(219, 96, 21, 0.2);
+            transform: rotate(-5deg);
+        }
+
+        .search-icon svg {
+            width: 100%;
+            height: 100%;
+            stroke: #183942;
+            fill: none;
+            stroke-width: 2;
+        }
+
+        .header-title {
+            color: white;
+            font-size: 36px;
+            font-weight: 900;
+            text-align: center;
+            z-index: 2;
+            letter-spacing: -1px;
+        }
+
+        .header-title .task {
+            color: #F5BE10;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .header-title .slash {
+            color: white;
+            opacity: 0.8;
+        }
+
+        .header-title .investigation {
+            color: #D96017;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .header-logo {
+            text-align: right;
+            z-index: 2;
+        }
+
+        .logo-image {
+            max-width: 200px;
+            height: auto;
+            display: block;
+        }
+
+        .logo-text {
+            font-size: 24px;
+            color: #183942;
+            font-weight: 900;
+            margin-bottom: 5px;
+            text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.5);
+        }
+
+        .logo-subtext {
+            font-size: 12px;
+            color: #D96017;
+            letter-spacing: 1.5px;
+            font-weight: bold;
+        }
+
+        /* Main Content */
+        .content {
+            padding: 50px 40px;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 28px;
+            color: #183942;
+            margin-bottom: 30px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(90deg, #D96017 0%, #F5BE10 100%);
+            border-radius: 2px;
+        }
+
+        .problems-list {
+            text-align: center;
+            margin-bottom: 40px;
+            background: linear-gradient(135deg, #f0f8ff 0%, #ffffff 100%);
+            padding: 35px;
+            border-radius: 10px;
+            border-left: 6px solid #D96017;
+            box-shadow: 0 4px 15px rgba(36, 75, 90, 0.08);
+        }
+
+        .problems-list p {
+            color: #183942;
+            font-size: 16px;
+            margin: 12px 0;
+            font-weight: 600;
+        }
+
+        .instruction {
+            font-size: 16px;
+            color: #183942;
+            margin-bottom: 30px;
+            background: linear-gradient(135deg, #f0f8ff 0%, #ffffff 100%);
+            padding: 22px;
+            border-radius: 10px;
+            border-left: 6px solid #F5BE10;
+            box-shadow: 0 4px 15px rgba(36, 75, 90, 0.08);
+            font-weight: 500;
+        }
+
+        /* Table Styles */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(36, 75, 90, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th {
+            background: linear-gradient(135deg, #183942 0%, #2c5f75 100%);
+            color: white;
+            padding: 18px;
+            text-align: left;
+            font-weight: 900;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: none;
+        }
+
+        td {
+            padding: 16px 18px;
+            border: 2px solid #e0e0e0;
+            height: 100px;
+            background: white;
+        }
+
+        td:first-child {
+            background: linear-gradient(135deg, #f0f8ff 0%, #ffffff 100%);
+            font-weight: 700;
+            color: #183942;
+            width: 25%;
+            border-left: 4px solid #D96017;
+        }
+
+        .editable {
+            width: 100%;
+            height: 100%;
+            border: none;
+            padding: 8px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 14px;
+            resize: none;
+            background: white;
+            color: #183942;
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
+
+        .editable:focus {
+            outline: 2px solid #F5BE10;
+            background: linear-gradient(135deg, #fffbf0 0%, #ffffff 100%);
+            box-shadow: inset 0 0 8px rgba(247, 190, 0, 0.1);
+        }
+
+        tr:hover td:not(:first-child) {
+            background: #f9f9f9;
+        }
+
+        /* Conclusion Section */
+        .conclusion-section {
+            background: linear-gradient(135deg, #f0f8ff 0%, #ffffff 100%);
+            padding: 35px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            border-left: 6px solid #D96017;
+            box-shadow: 0 4px 15px rgba(36, 75, 90, 0.08);
+        }
+
+        .conclusion-label {
+            font-size: 16px;
+            font-weight: 900;
+            color: #183942;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .conclusion-field {
+            background: white;
+            border: 2px solid #D96017;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            box-shadow: 0 2px 8px rgba(219, 96, 21, 0.08);
+        }
+
+        .conclusion-field textarea {
+            width: 100%;
+            height: 80px;
+            border: none;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 14px;
+            resize: none;
+            color: #183942;
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
+
+        .conclusion-field textarea:focus {
+            outline: 2px solid #F5BE10;
+            background: linear-gradient(135deg, #fffbf0 0%, #ffffff 100%);
+        }
+
+        .conclusion-field label {
+            display: block;
+            font-weight: 900;
+            color: #183942;
+            margin-bottom: 10px;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Button Section */
+        .button-section {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            padding: 14px 28px;
+            font-size: 14px;
+            font-weight: 900;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 6px 16px rgba(36, 75, 90, 0.15);
+        }
+
+        .btn-download-png {
+            background: linear-gradient(135deg, #D96017 0%, #F5BE10 100%);
+            color: white;
+        }
+
+        .btn-download-png:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(219, 96, 21, 0.3);
+        }
+
+        .btn-reset {
+            background: linear-gradient(135deg, #993921 0%, #b84a2d 100%);
+            color: white;
+        }
+
+        .btn-reset:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(153, 57, 33, 0.25);
+        }
+
+        button:active {
+            transform: translateY(-1px);
+        }
+
+        /* Print Styles */
+        @media print {
+            .button-section,
+            .language-toggle {
+                display: none;
+            }
+            
+            body {
+                background: white;
+                padding: 0;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .language-toggle {
+                position: static;
+                margin-bottom: 20px;
+                justify-content: center;
+            }
+
+            .header {
+                grid-template-columns: 1fr;
+                padding: 30px 15px;
+            }
+
+            .header-title {
+                font-size: 24px;
+            }
+
+            .content {
+                padding: 30px 20px;
+            }
+
+            .section-title {
+                font-size: 22px;
+            }
+
+            td, th {
+                padding: 12px;
+                font-size: 12px;
+            }
+
+            td {
+                height: auto;
+                min-height: 80px;
+            }
+
+            button {
+                padding: 12px 20px;
+                font-size: 12px;
+            }
+        }
+
+        .copy-protection {
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
+
+        .success-message {
+            display: none;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #D96017 0%, #F5BE10 100%);
+            color: white;
+            padding: 16px 24px;
+            border-radius: 8px;
+            box-shadow: 0 6px 16px rgba(219, 96, 21, 0.2);
+            z-index: 1001;
+            animation: slideIn 0.3s ease;
+            font-weight: bold;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .success-message.show {
+            display: block;
+        }
+
+        /* Hide elements based on language */
+        .en, .es {
+            display: none;
+        }
+
+        .en.active, .es.active {
+            display: inline;
+        }
+    </style>
+</head>
+<body>
+    <!-- Language Toggle -->
+    <div class="language-toggle">
+        <button class="lang-btn active" onclick="setLanguage('en')">EN</button>
+        <button class="lang-btn" onclick="setLanguage('es')">ES</button>
+    </div>
+
+    <div class="container" id="printArea">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-left">
+                <div class="search-icon">
+                    <svg viewBox="0 0 24 24">
+                        <circle cx="10" cy="10" r="6"></circle>
+                        <path d="M14 14l6 6"></path>
+                    </svg>
+                </div>
+            </div>
+            
+            <div class="header-title">
+                <span class="task">TASK</span><span class="slash"> / </span><span class="investigation">INVESTIGATION</span>
+            </div>
+            
+            <div class="header-logo">
+                <img src="logo_escolaris.png" alt="eSCHOLARIS" class="logo-image">
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="content copy-protection">
+            <h1 class="section-title">
+                <span class="en active">Philosophical Problems</span>
+                <span class="es">Problemas Filosóficos</span>
+            </h1>
+
+            <div class="problems-list">
+                <p><span class="en active">• The Problem of Knowledge</span><span class="es">• El Problema del Conocimiento</span></p>
+                <p><span class="en active">• The Problem of Man</span><span class="es">• El Problema del Hombre</span></p>
+                <p><span class="en active">• The Problem of God</span><span class="es">• El Problema de Dios</span></p>
+                <p><span class="en active">• The Problem of Reality and Being</span><span class="es">• El Problema de la Realidad y del Ser</span></p>
+            </div>
+
+            <div class="instruction">
+                <strong><span class="en active">1. Describe the problems in the area that it covers, and the science responsible for solving them.</span><span class="es">1. Describe los problemas en el área que abarca, y la ciencia encargada de solucionarlos.</span></strong>
+            </div>
+
+            <!-- Main Table -->
+            <table id="workTable">
+                <thead>
+                    <tr>
+                        <th><span class="en active">Philosophical Problem</span><span class="es">Problema Filosófico</span></th>
+                        <th><span class="en active">Related Sciences</span><span class="es">Ciencias Relacionadas</span></th>
+                        <th><span class="en active">Real Example</span><span class="es">Ejemplo Real</span></th>
+                        <th><span class="en active">Commentary</span><span class="es">Comentario</span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="en active">Problems of Being</span><span class="es">Problemas del Ser</span></td>
+                        <td><textarea class="editable" placeholder=""></textarea></td>
+                        <td><textarea class="editable" placeholder=""></textarea></td>
+                        <td><textarea class="editable" placeholder=""></textarea></td>
+                    </tr>
+                    <tr>
+                        <td><span class="en active">Problem of Knowledge</span><span class="es">Problema del Conocimiento</span></td>
+                        <td><textarea class="editable" placeholder=""></textarea></td>
+                        <td><textarea class="editable" placeholder=""></textarea></td>
+                        <td><textarea class="editable" placeholder=""></textarea></td>
+                    </tr>
+                    <tr>
+                        <td><span class="en active">Problem of God</span><span class="es">Problema de Dios</span></td>
+                        <td><textarea class="editable" placeholder=""></textarea></td>
+                        <td><textarea class="editable" placeholder=""></textarea></td>
+                        <td><textarea class="editable" placeholder=""></textarea></td>
+                    </tr>
+                    <tr>
+                        <td><span class="en active">Problems of Man</span><span class="es">Problemas del Hombre</span></td>
+                        <td><textarea class="editable" placeholder=""></textarea></td>
+                        <td><textarea class="editable" placeholder=""></textarea></td>
+                        <td><textarea class="editable" placeholder=""></textarea></td>
+                    </tr>
+                    <tr>
+                        <td style="color: #999; font-weight: normal;"><span class="en active">Additional notes</span><span class="es">Notas adicionales</span></td>
+                        <td colspan="3"><textarea class="editable" placeholder=""></textarea></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Conclusion Section -->
+            <div class="instruction">
+                <strong><span class="en active">At the end, write a commentary and two conclusions.</span><span class="es">Al final escribe un comentario y dos conclusiones.</span></strong>
+            </div>
+
+            <div class="conclusion-section">
+                <div class="conclusion-field">
+                    <label><span class="en active">General Commentary:</span><span class="es">Comentario General:</span></label>
+                    <textarea class="editable" id="generalCommentary" placeholder=""></textarea>
+                </div>
+
+                <div class="conclusion-field">
+                    <label><span class="en active">Conclusion 1:</span><span class="es">Conclusión 1:</span></label>
+                    <textarea class="editable" id="conclusion1" placeholder=""></textarea>
+                </div>
+
+                <div class="conclusion-field">
+                    <label><span class="en active">Conclusion 2:</span><span class="es">Conclusión 2:</span></label>
+                    <textarea class="editable" id="conclusion2" placeholder=""></textarea>
+                </div>
+            </div>
+
+            <!-- Button Section -->
+            <div class="button-section">
+                <button class="btn-download-png" onclick="downloadPNG()">
+                    <span class="en active">🖼️ Download Image</span>
+                    <span class="es">🖼️ Descargar Imagen</span>
+                </button>
+                <button class="btn-reset" onclick="resetForm()">
+                    <span class="en active">🔄 Reset Form</span>
+                    <span class="es">🔄 Reiniciar Formulario</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Message -->
+    <div class="success-message" id="successMessage"></div>
+
+    <script>
+        // Language Management
+        let currentLanguage = 'en';
+
+        function setLanguage(lang) {
+            currentLanguage = lang;
+            
+            // Update button states
+            const buttons = document.querySelectorAll('.lang-btn');
+            buttons.forEach(btn => {
+                btn.classList.remove('active');
+                const btnLang = btn.textContent.trim().toLowerCase();
+                if ((lang === 'en' && btnLang === 'en') || (lang === 'es' && btnLang === 'es')) {
+                    btn.classList.add('active');
+                }
+            });
+
+            // Update content visibility
+            document.querySelectorAll('[class*="en"]').forEach(el => {
+                if (el.classList.contains('en')) {
+                    el.classList.remove('active');
+                }
+            });
+            document.querySelectorAll('[class*="es"]').forEach(el => {
+                if (el.classList.contains('es')) {
+                    el.classList.remove('active');
+                }
+            });
+
+            if (lang === 'en') {
+                document.querySelectorAll('.en').forEach(el => {
+                    el.classList.add('active');
+                });
+            } else if (lang === 'es') {
+                document.querySelectorAll('.es').forEach(el => {
+                    el.classList.add('active');
+                });
+            }
+        }
+
+        // Prevent copy and paste
+        document.addEventListener('copy', function(e) {
+            const editables = document.querySelectorAll('.editable');
+            let isCopyingFromEditable = false;
+            
+            editables.forEach(el => {
+                if (el === document.activeElement || el.contains(document.activeElement)) {
+                    isCopyingFromEditable = true;
+                }
+            });
+            
+            if (!isCopyingFromEditable) {
+                e.preventDefault();
+                const msg = currentLanguage === 'en' ? 'Copying is restricted' : 'Copiar está restringido';
+                showMessage(msg);
+            }
+        });
+
+        document.addEventListener('cut', function(e) {
+            e.preventDefault();
+            const msg = currentLanguage === 'en' ? 'Cutting is restricted' : 'Cortar está restringido';
+            showMessage(msg);
+        });
+
+        document.addEventListener('paste', function(e) {
+            e.preventDefault();
+            const msg = currentLanguage === 'en' ? 'Pasting is restricted' : 'Pegar está restringido';
+            showMessage(msg);
+        });
+
+        // Prevent right-click context menu
+        document.addEventListener('contextmenu', function(e) {
+            const editables = document.querySelectorAll('.editable');
+            let isInEditable = false;
+            
+            editables.forEach(el => {
+                if (el.contains(e.target)) {
+                    isInEditable = true;
+                }
+            });
+            
+            if (!isInEditable) {
+                e.preventDefault();
+            }
+        });
+
+        // Show success message
+        function showMessage(message) {
+            const msgEl = document.getElementById('successMessage');
+            msgEl.textContent = message;
+            msgEl.classList.add('show');
+            
+            setTimeout(() => {
+                msgEl.classList.remove('show');
+            }, 3000);
+        }
+
+        // Download as PNG
+        function downloadPNG() {
+            const element = document.getElementById('printArea');
+            const filename = currentLanguage === 'en' ? 
+                'Philosophical_Problems_Worksheet.png' : 
+                'Hoja_Problemas_Filosoficos.png';
+            
+            html2canvas(element, { 
+                scale: 2, 
+                useCORS: true,
+                backgroundColor: '#ffffff'
+            }).then(canvas => {
+                const link = document.createElement('a');
+                link.href = canvas.toDataURL('image/png');
+                link.download = filename;
+                link.click();
+                
+                const msg = currentLanguage === 'en' ? 
+                    '✅ Image downloaded successfully!' : 
+                    '✅ ¡Imagen descargada exitosamente!';
+                showMessage(msg);
+            }).catch(err => {
+                console.error('Error generating PNG:', err);
+                const msg = currentLanguage === 'en' ? 
+                    '❌ Error generating image' : 
+                    '❌ Error generando imagen';
+                showMessage(msg);
+            });
+        }
+
+        // Reset form
+        function resetForm() {
+            const confirmMsg = currentLanguage === 'en' ? 
+                'Are you sure you want to reset the form? This action cannot be undone.' : 
+                '¿Estás seguro de que deseas reiniciar el formulario? Esta acción no se puede deshacer.';
+            
+            if (confirm(confirmMsg)) {
+                document.querySelectorAll('.editable').forEach(el => {
+                    el.value = '';
+                });
+                const msg = currentLanguage === 'en' ? 
+                    '✅ Form has been reset' : 
+                    '✅ El formulario ha sido reiniciado';
+                showMessage(msg);
+            }
+        }
+
+        // Auto-adjust textarea height
+        document.querySelectorAll('.editable').forEach(textarea => {
+            textarea.addEventListener('input', function() {
+                this.style.height = 'auto';
+                this.style.height = Math.min(this.scrollHeight, 100) + 'px';
+            });
+        });
+    </script>
+</body>
+</html>
